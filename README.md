@@ -1,6 +1,6 @@
-# DSW_3P_PR02 — Gestor de Eventos Tecnológicos
+# DSW_3P_PR02 — API de personajes
 
-API REST de eventos con ASP.NET Core MVC, Repository, Service, SQL Server y Entity Framework Core.
+API REST de personajes con ASP.NET Core, Repository, Service, SQL Server y Entity Framework Core.
 
 ## Requisitos
 
@@ -23,13 +23,9 @@ dotnet restore
 dotnet run --launch-profile http
 ```
 
-La aplicación aplica las migraciones al iniciar e indica el host en la consola.
-Con el perfil `http`, abre `http://localhost:5153/swagger` (no abras un archivo
-HTML directamente). La conexión y las consultas de Swagger usan la misma base
-`DSW_3P_PR02` en `localhost\SQLEXPRESS`.
-
-Las consultas `SELECT` y ejemplos para insertar eventos manualmente están en
-[`sql/consultas_eventos.sql`](sql/consultas_eventos.sql).
+La aplicación aplica las migraciones al iniciar e indica el host en la consola,
+sincronizando el esquema con personajes y conservando los personajes registrados
+en bases existentes. Con el perfil `http`, abre `http://localhost:5153/swagger`.
 
 Para generar futuras migraciones:
 
@@ -42,51 +38,24 @@ dotnet ef database update
 
 | Método | Ruta | Resultado |
 |---|---|---|
-| GET | `/api/eventos` | Lista eventos |
-| GET | `/api/eventos/{id}` | Obtiene un evento |
-| POST | `/api/eventos` | Crea un evento (`201`) |
-| PUT | `/api/eventos/{id}` | Actualiza un evento (`204`) |
-| DELETE | `/api/eventos/{id}` | Elimina un evento (`204`) |
 | GET | `/api/personajes` | Lista personajes |
 | GET | `/api/personajes/{id}` | Obtiene un personaje |
 | POST | `/api/personajes` | Crea un personaje (`201`) |
 | PUT | `/api/personajes/{id}` | Actualiza un personaje (`204`) |
 | DELETE | `/api/personajes/{id}` | Elimina un personaje (`204`) |
 
-El nombre es obligatorio, el cupo máximo debe ser mayor que cero y la fecha debe
-ser una fecha válida en formato `yyyy-MM-dd`. Las validaciones inválidas
-responden `400`; los identificadores inexistentes responden `404`.
+El nombre es obligatorio y el poder debe estar entre 0 y 100. Las solicitudes
+inválidas responden `400`; los identificadores inexistentes responden `404`.
 
 Ejemplo de cuerpo:
 
 ```json
 {
-  "nombre": "Hackaton de IA",
-  "categoria": "Hackaton",
-  "fecha": "2026-12-10",
-  "lugar": "Monterrey",
-  "cupoMaximo": 120,
-  "activo": true
+  "nombre": "Ariadna",
+  "anime": "Crónicas del Alba",
+  "tipo": "Principal",
+  "poder": 85,
+  "habilidad": "Control del viento",
+  "favorito": true
 }
 ```
-
-## Versiones en Git
-
-El historial conserva la versión inicial con persistencia JSON y el cambio a
-SQL Server/EF Core. Al migrar se sustituye el repositorio JSON por
-`SqlEventoRepository`, se agrega `EventosDbContext` y se configura SQL Server.
-El Controller, el Service y la interfaz `IEventoRepository` mantienen su
-contrato.
-
-## Interfaz Animission
-
-El repositorio incluye una interfaz web independiente para GitHub Pages:
-
-- `index.html`
-- `styles.css`
-- `app.js`
-
-Al abrir el sitio se muestra una vista con personajes originales y datos de
-demostracion. Desde el boton de configuracion puede indicarse la URL base de
-esta API. No se requiere alterar archivos ni modificar la base para visualizar
-la interfaz.

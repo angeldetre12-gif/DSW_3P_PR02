@@ -8,10 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<EventosDbContext>(options =>
+builder.Services.AddDbContext<PersonajesDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SQLSERVERCONNECTION")));
-builder.Services.AddScoped<IEventoRepository, SqlEventoRepository>();
-builder.Services.AddScoped<IEventoService, EventoService>();
 builder.Services.AddScoped<IPersonajeRepository, SqlPersonajeRepository>();
 builder.Services.AddScoped<IPersonajeService, PersonajeService>();
 builder.Services.AddCors(options =>
@@ -29,7 +27,7 @@ var app = builder.Build();
 
 await using (var scope = app.Services.CreateAsyncScope())
 {
-    var dbContext = scope.ServiceProvider.GetRequiredService<EventosDbContext>();
+    var dbContext = scope.ServiceProvider.GetRequiredService<PersonajesDbContext>();
     await dbContext.Database.MigrateAsync();
 }
 

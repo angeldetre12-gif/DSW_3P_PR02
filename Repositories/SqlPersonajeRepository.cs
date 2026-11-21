@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DSW_3P_PR02.Repositories;
 
-public sealed class SqlPersonajeRepository(EventosDbContext dbContext) : IPersonajeRepository
+public sealed class SqlPersonajeRepository(PersonajesDbContext dbContext) : IPersonajeRepository
 {
     public async Task<IReadOnlyList<Personaje>> ObtenerTodosAsync() =>
         await dbContext.Personajes.AsNoTracking().OrderBy(personaje => personaje.Id).ToListAsync();
