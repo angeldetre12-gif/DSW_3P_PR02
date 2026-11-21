@@ -12,6 +12,8 @@ builder.Services.AddDbContext<EventosDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SQLSERVERCONNECTION")));
 builder.Services.AddScoped<IEventoRepository, SqlEventoRepository>();
 builder.Services.AddScoped<IEventoService, EventoService>();
+builder.Services.AddScoped<IPersonajeRepository, SqlPersonajeRepository>();
+builder.Services.AddScoped<IPersonajeService, PersonajeService>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AnimissionFrontend", policy =>

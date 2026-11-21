@@ -47,6 +47,11 @@ dotnet ef database update
 | POST | `/api/eventos` | Crea un evento (`201`) |
 | PUT | `/api/eventos/{id}` | Actualiza un evento (`204`) |
 | DELETE | `/api/eventos/{id}` | Elimina un evento (`204`) |
+| GET | `/api/personajes` | Lista personajes |
+| GET | `/api/personajes/{id}` | Obtiene un personaje |
+| POST | `/api/personajes` | Crea un personaje (`201`) |
+| PUT | `/api/personajes/{id}` | Actualiza un personaje (`204`) |
+| DELETE | `/api/personajes/{id}` | Elimina un personaje (`204`) |
 
 El nombre es obligatorio, el cupo máximo debe ser mayor que cero y la fecha debe
 ser una fecha válida en formato `yyyy-MM-dd`. Las validaciones inválidas
