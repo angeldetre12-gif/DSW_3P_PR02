@@ -6,6 +6,7 @@ namespace DSW_3P_PR02.Data;
 public sealed class EventosDbContext(DbContextOptions<EventosDbContext> options) : DbContext(options)
 {
     public DbSet<Evento> Eventos => Set<Evento>();
+    public DbSet<Personaje> Personajes => Set<Personaje>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
