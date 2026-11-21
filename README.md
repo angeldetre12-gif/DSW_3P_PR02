@@ -72,3 +72,16 @@ SQL Server/EF Core. Al migrar se sustituye el repositorio JSON por
 `SqlEventoRepository`, se agrega `EventosDbContext` y se configura SQL Server.
 El Controller, el Service y la interfaz `IEventoRepository` mantienen su
 contrato.
+
+## Interfaz Animission
+
+El repositorio incluye una interfaz web independiente para GitHub Pages:
+
+- `index.html`
+- `styles.css`
+- `app.js`
+
+Al abrir el sitio se muestra una vista con personajes originales y datos de
+demostracion. Desde el boton de configuracion puede indicarse la URL base de
+esta API. No se requiere alterar archivos ni modificar la base para visualizar
+la interfaz.

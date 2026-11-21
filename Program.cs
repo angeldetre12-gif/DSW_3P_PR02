@@ -12,6 +12,16 @@ builder.Services.AddDbContext<EventosDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SQLSERVERCONNECTION")));
 builder.Services.AddScoped<IEventoRepository, SqlEventoRepository>();
 builder.Services.AddScoped<IEventoService, EventoService>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AnimissionFrontend", policy =>
+        policy.WithOrigins(
+                "https://angeldetre12-gif.github.io",
+                "http://localhost:5500",
+                "http://127.0.0.1:5500")
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+});
 
 var app = builder.Build();
 
@@ -23,6 +33,7 @@ await using (var scope = app.Services.CreateAsyncScope())
 
 app.UseSwagger();
 app.UseSwaggerUI();
+app.UseCors("AnimissionFrontend");
 
 app.MapControllers();
 

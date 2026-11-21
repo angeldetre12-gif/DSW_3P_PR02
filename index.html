@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Animission — Centro de misiones</title>
+  <meta name="description" content="Panel anime para gestionar misiones y conectarlo a una API ASP.NET Core.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="ambient ambient-a"></div>
+  <div class="ambient ambient-b"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Animission inicio">
+      <span class="brand-mark">A</span>
+      <span><strong>ANIMISSION</strong><small>MISSION HUB</small></span>
+    </a>
+    <div class="top-actions">
+      <span class="status-pill"><i id="statusDot"></i><span id="apiStatus">Modo demostración</span></span>
+      <button class="icon-btn" id="configBtn" title="Configurar API">⚙</button>
+      <button class="avatar-btn" id="authBtn" title="Iniciar sesión"><span>U</span></button>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">TEMPORADA 2026 · HÉROES ACTIVOS</p>
+        <h1>Tu próxima aventura<br><em>empieza aquí.</em></h1>
+        <p class="hero-text">Organiza misiones, recluta aliados y supera cada reto desde tu centro de operaciones.</p>
+        <button class="primary-btn" id="newBtn"><span>＋</span> Nueva misión</button>
+      </div>
+
+      <div class="squad-card">
+        <div class="squad-head">
+          <div><small>ESCUADRÓN</small><strong>Los Celestiales</strong></div>
+          <span class="level">LV. 24</span>
+        </div>
+        <div class="characters" aria-label="Equipo de personajes">
+          <div class="character character-1"><div class="hair"></div><div class="face"><i></i><b></b></div><div class="jacket"></div><span>AKIRA</span></div>
+          <div class="character character-2"><div class="hair"></div><div class="face"><i></i><b></b></div><div class="jacket"></div><span>MIKO</span></div>
+          <div class="character character-3"><div class="hair"></div><div class="face"><i></i><b></b></div><div class="jacket"></div><span>REN</span></div>
+        </div>
+        <div class="squad-stats"><span><b>3</b><small>ALIADOS</small></span><span><b id="heroXp">2.4K</b><small>XP TOTAL</small></span><span><b id="heroDone">68%</b><small>PROGRESO</small></span></div>
+      </div>
+    </section>
+
+    <section class="metrics" aria-label="Resumen">
+      <article><span class="metric-icon purple">✦</span><div><small>MISIONES TOTALES</small><strong id="total">—</strong></div><i id="totalTrend">Este ciclo</i></article>
+      <article><span class="metric-icon green">✓</span><div><small>COMPLETADAS</small><strong id="done">—</strong></div><i id="doneTrend">Objetivos</i></article>
+      <article><span class="metric-icon orange">◷</span><div><small>PENDIENTES</small><strong id="pending">—</strong></div><i id="pendingTrend">Por iniciar</i></article>
+      <article><span class="metric-icon pink">◆</span><div><small>XP ACUMULADA</small><strong id="xp">—</strong></div><i>Recompensas</i></article>
+    </section>
+
+    <section class="mission-panel">
+      <div class="panel-heading">
+        <div><p class="eyebrow">CENTRO DE OPERACIONES</p><h2>Misiones disponibles</h2></div>
+        <div class="filters">
+          <label class="search-box"><span>⌕</span><input id="search" type="search" placeholder="Buscar misión" aria-label="Buscar misión"></label>
+          <select id="filter" aria-label="Filtrar estado"><option value="all">Todas</option><option value="pending">Pendientes</option><option value="done">Completadas</option></select>
+        </div>
+      </div>
+      <div id="missions" class="mission-grid"></div>
+    </section>
+  </main>
+
+  <div class="overlay" id="configModal" role="dialog" aria-modal="true">
+    <div class="dialog"><button class="close" data-close="configModal">×</button><p class="eyebrow">CONEXIÓN</p><h2>Conectar API</h2><p>Introduce la URL base de tu backend ASP.NET Core.</p>
+      <form id="configForm"><label>URL base<input id="baseUrl" type="url" placeholder="https://tu-api.azurewebsites.net" required></label><small class="hint">Recuerda permitir el origen de GitHub Pages en CORS.</small><button class="primary-btn wide" type="submit">Guardar conexión</button></form>
+    </div>
+  </div>
+
+  <div class="overlay" id="loginModal" role="dialog" aria-modal="true">
+    <div class="dialog"><button class="close" data-close="loginModal">×</button><p class="eyebrow">ACCESO</p><h2>Iniciar sesión</h2><p>Usa las credenciales configuradas en tu API.</p>
+      <form id="loginForm"><label>Usuario<input id="username" autocomplete="username" value="admin" required></label><label>Contraseña<input id="password" type="password" autocomplete="current-password" value="QuestLog123!" required></label><button class="primary-btn wide" type="submit">Ingresar</button></form>
+    </div>
+  </div>
+
+  <div class="overlay" id="missionModal" role="dialog" aria-modal="true">
+    <div class="dialog"><button class="close" data-close="missionModal">×</button><p class="eyebrow">REGISTRO</p><h2 id="missionTitle">Nueva misión</h2>
+      <form id="missionForm"><input id="missionId" type="hidden"><label>Nombre<input id="missionName" maxlength="120" required placeholder="Ej. Rescatar al explorador"></label><div class="form-row"><label>Dificultad<select id="missionDifficulty"><option>Fácil</option><option>Media</option><option>Difícil</option></select></label><label>Recompensa XP<input id="missionXp" type="number" min="0" value="100" required></label></div><label class="check-label"><input id="missionDone" type="checkbox"> Misión completada</label><button class="primary-btn wide" type="submit">Guardar misión</button></form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>
