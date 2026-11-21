@@ -27,6 +27,43 @@ La aplicación aplica las migraciones al iniciar e indica el host en la consola,
 sincronizando el esquema con personajes y conservando los personajes registrados
 en bases existentes. Con el perfil `http`, abre `http://localhost:5153/swagger`.
 
+## Ajustes en SQL Server
+
+La aplicación ejecuta las migraciones automáticamente al iniciar. También puedes
+aplicarlas manualmente desde la carpeta del proyecto:
+
+```powershell
+dotnet ef database update
+```
+
+La migración deja la tabla `dbo.Personajes` lista y conserva sus filas existentes.
+Para consultar o editar datos desde SQL Server Management Studio:
+
+```sql
+USE [DSW_3P_PR02];
+
+SELECT Id, Nombre, Anime, Tipo, Poder, Habilidad, Favorito
+FROM dbo.Personajes
+ORDER BY Id;
+
+-- Sustituye 3 por el Id que quieras modificar.
+UPDATE dbo.Personajes
+SET Poder = 98, Favorito = 1
+WHERE Id = 3;
+```
+
+La cadena de conexión se configura con `ConnectionStrings:SQLSERVERCONNECTION`
+en `appsettings.Development.json` o con la variable de entorno
+`ConnectionStrings__SQLSERVERCONNECTION`.
+
+## Conectar la interfaz
+
+Inicia la API con `dotnet run --launch-profile http`, sirve
+`QuestLog_Frontend.html` desde `http://localhost:5500` (por ejemplo, con Live
+Server en VS Code) y configura `http://localhost:5153` como URL base. Si la
+interfaz está publicada, configura la URL pública del backend, no la URL de
+GitHub Pages.
+
 Para generar futuras migraciones:
 
 ```powershell
