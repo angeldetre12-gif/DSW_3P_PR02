@@ -26,6 +26,8 @@ dotnet run --launch-profile http
 La aplicación aplica las migraciones al iniciar e indica el host en la consola,
 sincronizando el esquema con personajes y conservando los personajes registrados
 en bases existentes. Con el perfil `http`, abre `http://localhost:5153/swagger`.
+Si la tabla está vacía, agrega tres personajes originales de ejemplo; no duplica
+ni modifica los personajes que ya existan.
 
 ## Ajustes en SQL Server
 

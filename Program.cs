@@ -1,4 +1,5 @@
 using DSW_3P_PR02.Data;
+using DSW_3P_PR02.Models;
 using DSW_3P_PR02.Repositories;
 using DSW_3P_PR02.Services;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +30,38 @@ await using (var scope = app.Services.CreateAsyncScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<PersonajesDbContext>();
     await dbContext.Database.MigrateAsync();
+
+    if (!await dbContext.Personajes.AnyAsync())
+    {
+        dbContext.Personajes.AddRange(
+            new Personaje
+            {
+                Nombre = "Ariadna Solís",
+                Anime = "El archivo de las auroras",
+                Tipo = "Protagonista",
+                Poder = 93,
+                Habilidad = "Luz prismática",
+                Favorito = true
+            },
+            new Personaje
+            {
+                Nombre = "Kael Virel",
+                Anime = "Los mapas de ceniza",
+                Tipo = "Antagonista",
+                Poder = 86,
+                Habilidad = "Gravedad invertida"
+            },
+            new Personaje
+            {
+                Nombre = "Nima",
+                Anime = "El jardín de las lunas",
+                Tipo = "Secundario",
+                Poder = 72,
+                Habilidad = "Eco curativo"
+            });
+
+        await dbContext.SaveChangesAsync();
+    }
 }
 
 app.UseSwagger();
