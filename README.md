@@ -56,6 +56,18 @@ La cadena de conexión se configura con `ConnectionStrings:SQLSERVERCONNECTION`
 en `appsettings.Development.json` o con la variable de entorno
 `ConnectionStrings__SQLSERVERCONNECTION`.
 
+Para usar autenticación de SQL Server en desarrollo, guarda la cadena localmente
+con User Secrets, reemplazando `USUARIO_SQL` y `CONTRASENA_SQL` por tus datos:
+
+```powershell
+dotnet user-secrets set "ConnectionStrings:SQLSERVERCONNECTION" 'Server=localhost\SQLEXPRESS;Database=DSW_3P_PR02;User ID=USUARIO_SQL;Password=CONTRASENA_SQL;Encrypt=True;TrustServerCertificate=True'
+```
+
+Después inicia la API con `dotnet run --launch-profile http`. El secreto local
+reemplaza la cadena de autenticación integrada de `appsettings.json` y no se
+sube a GitHub. Para otros entornos, configura `ConnectionStrings__SQLSERVERCONNECTION`
+en el administrador de secretos del servidor.
+
 ## Conectar la interfaz
 
 Inicia la API con `dotnet run --launch-profile http`, sirve
