@@ -1,6 +1,73 @@
-@DSW_3P_PR02_HostAddress = http://localhost:5153
+@baseUrl = http://localhost:5153
+@token = reemplaza-por-el-token-del-login
 
-GET {{DSW_3P_PR02_HostAddress}}/api/personajes
+### Login: copia accessToken en @token
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "usuario": "demo",
+  "contrasena": "TU_CONTRASENA_LOCAL"
+}
+
+### Consultar todos
+GET {{baseUrl}}/api/personajes
+Authorization: Bearer {{token}}
 Accept: application/json
 
-###
+### Consultar por ID
+GET {{baseUrl}}/api/personajes/1
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Consultar por videojuego
+GET {{baseUrl}}/api/personajes/videojuego/El%20archivo%20de%20las%20auroras
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Consultar nivel mínimo
+GET {{baseUrl}}/api/personajes/nivel/70
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Registrar personaje; inicia como disponible
+POST {{baseUrl}}/api/personajes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Lira",
+  "videojuego": "Crónicas del Alba",
+  "clase": "Exploradora",
+  "nivel": 35,
+  "poder": 420,
+  "imagenUrl": "https://placehold.co/600x800.png?text=Lira"
+}
+
+### Actualizar personaje
+PUT {{baseUrl}}/api/personajes/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Ariadna Solís",
+  "videojuego": "El archivo de las auroras",
+  "clase": "Exploradora",
+  "nivel": 93,
+  "poder": 930,
+  "disponible": true,
+  "imagenUrl": "https://placehold.co/600x800.png?text=Ariadna"
+}
+
+### Eliminar personaje
+DELETE {{baseUrl}}/api/personajes/1
+Authorization: Bearer {{token}}
+
+### Error esperado: personaje inexistente
+GET {{baseUrl}}/api/personajes/999999
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### Error esperado: acceso sin token (401)
+GET {{baseUrl}}/api/personajes
+Accept: application/json

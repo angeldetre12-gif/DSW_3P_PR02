@@ -4,9 +4,11 @@ namespace DSW_3P_PR02.Repositories;
 
 public interface IPersonajeRepository
 {
-    Task<IReadOnlyList<Personaje>> ObtenerTodosAsync();
-    Task<Personaje?> ObtenerPorIdAsync(int id);
-    Task<Personaje> CrearAsync(Personaje personaje);
-    Task<bool> ActualizarAsync(Personaje personaje);
-    Task<bool> EliminarAsync(int id);
+    Task<IReadOnlyList<Personaje>> ObtenerTodosAsync(CancellationToken cancellationToken);
+    Task<Personaje?> ObtenerPorIdAsync(int id, CancellationToken cancellationToken);
+    Task<IReadOnlyList<Personaje>> ObtenerPorVideojuegoAsync(string nombre, CancellationToken cancellationToken);
+    Task<IReadOnlyList<Personaje>> ObtenerPorNivelAsync(int nivel, CancellationToken cancellationToken);
+    Task<Personaje> CrearAsync(Personaje personaje, CancellationToken cancellationToken);
+    Task<bool> ActualizarAsync(Personaje personaje, CancellationToken cancellationToken);
+    Task<bool> EliminarAsync(int id, CancellationToken cancellationToken);
 }

@@ -29,16 +29,21 @@ namespace DSW_3P_PR02.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Anime")
-                        .HasMaxLength(120)
-                        .HasColumnType("nvarchar(120)");
+                    b.Property<string>("Clase")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
 
-                    b.Property<bool>("Favorito")
+                    b.Property<bool>("Disponible")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Habilidad")
-                        .HasMaxLength(120)
-                        .HasColumnType("nvarchar(120)");
+                    b.Property<string>("ImagenUrl")
+                        .IsRequired()
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
+
+                    b.Property<int>("Nivel")
+                        .HasColumnType("int");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -48,10 +53,10 @@ namespace DSW_3P_PR02.Migrations
                     b.Property<int>("Poder")
                         .HasColumnType("int");
 
-                    b.Property<string>("Tipo")
+                    b.Property<string>("Videojuego")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
 
                     b.HasKey("Id");
 
